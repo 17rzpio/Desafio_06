@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;//biblioteca que tem que importar para exportar para Excel
 
 
 
@@ -16,9 +16,9 @@ namespace Desafio_06
     
     public partial class Form1 : Form
     {
-        List<Aluno> alunos = new List<Aluno>();
+        List<Aluno> alunos = new List<Aluno>();//criar lista dinamica pois não tem quantidade de quantos vai inserir
         double somaNotas = 0;
-        public class Aluno
+        public class Aluno//cria classe Alunos
         {
             public string nome { get; set; }
             public int idade { get; set; }
@@ -30,13 +30,13 @@ namespace Desafio_06
             InitializeComponent();
         }
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        private void btnCadastrar_Click(object sender, EventArgs e)//evento do botão para salvar valores
         {
-            alunos.Add(new Aluno() { nome = txtNome.Text, idade = int.Parse(txtIdade.Text), nota = double.Parse(txtNota.Text) });
+            alunos.Add(new Aluno() { nome = txtNome.Text, idade = int.Parse(txtIdade.Text), nota = double.Parse(txtNota.Text) });//salva na lista os valores
             MessageBox.Show("Cadastrado realizado com Sucesso","Cadastro",MessageBoxButtons.OK,MessageBoxIcon.Information);
             somaNotas += double.Parse(txtIdade.Text);
 
-            Excel.Application xlApp;
+            Excel.Application xlApp;//Para salvar como arquivo excel
             Excel.Workbook xlWorkBook;
             Excel.Worksheet xlWorkSheet;
             object misValue = System.Reflection.Missing.Value;
@@ -44,7 +44,7 @@ namespace Desafio_06
             xlWorkBook = xlApp.Workbooks.Add(misValue);
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            xlWorkSheet.Cells[1, 1] = "Nome";
+            xlWorkSheet.Cells[1, 1] = "Nome";//preenche na linha 1 e coluna 1 a palavra Nome na tabela Excel que cria
             xlWorkSheet.Cells[1, 2] = "Idade";
             xlWorkSheet.Cells[1, 3] = "Nota";
             xlWorkSheet.Cells[1, 4] = "A soma de Notas";
@@ -53,7 +53,7 @@ namespace Desafio_06
             xlWorkSheet.Cells[2, 3] = txtNota.Text;
             xlWorkSheet.Cells[2, 4] = somaNotas;
 
-            xlWorkBook.SaveAs2("alunos.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.SaveAs2("alunos.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);//para criar tabela Excel com nome Alunos
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
 
